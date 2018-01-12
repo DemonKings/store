@@ -26,12 +26,19 @@ public class BaseServlet extends HttpServlet {
 				break;
 			}
 		}
+		//如果有与请求参数method同名的方法,则执行
 		if(flag){
 			try {
 				Method m = clazz.getMethod(method, HttpServletRequest.class,HttpServletResponse.class);
-				m.invoke(this, request,response);
+				//执行方法,返回值为要请求转发的路径
+				String path = (String) m.invoke(this, request,response);
+				//判断返回值
+				if(path!=null){
+					request.getRequestDispatcher(path).forward(request, response);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				
 			}
 		}
 	}
