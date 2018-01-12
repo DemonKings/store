@@ -37,4 +37,12 @@
     <servlet-name>BaseServlet</servlet-name>
     <url-pattern>/BaseServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>CodeServlet</servlet-name>
+  	<servlet-class>com.itheima.web.servlet.CodeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CodeServlet</servlet-name>
+  	<url-pattern>/code</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -42,6 +42,32 @@ public class UserServlet extends BaseServlet {
 			//获取用户名和密码
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
+			
+			//获取用户输入的验证码
+			String inputCode = request.getParameter("inputCode");
+			//获取session中的验证码字符串
+			String randomCode = (String) request.getSession().getAttribute("randomCode");
+			//判断用户名是否输入
+			if(username==null||username.trim().length()<=0){
+				request.setAttribute("msg", "请输入用户名");
+				return "/jsp/login.jsp";
+			}
+			//判断密码是否输入
+			if(password==null||password.trim().length()<=0){
+				request.setAttribute("msg", "请输入密码");
+				return "/jsp/login.jsp";
+			}
+			//判断验证码是否输入
+			if(inputCode==null||inputCode.trim().length()<=0){
+				request.setAttribute("msg", "请输入验证码");
+				return "/jsp/login.jsp";
+			}
+			//判断验证码是否正确
+			if(!inputCode.equalsIgnoreCase(randomCode)){
+				request.setAttribute("msg", "验证码错误");
+				return "/jsp/login.jsp";
+			}
+			
 			//调用service执行登录逻辑
 			UserService service = new UserServiceImpl();
 			User user = service.login(username,password);
