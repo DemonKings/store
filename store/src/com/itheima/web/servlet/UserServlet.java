@@ -58,7 +58,6 @@ public class UserServlet extends BaseServlet {
 					//账号未激活
 					request.setAttribute("msg", "账号未激活");
 					//request.getRequestDispatcher("/msg.jsp").forward(request, response);
-					return "/msg.jsp";
 				}
 			}else{
 				//用户名或密码错误
@@ -101,6 +100,8 @@ public class UserServlet extends BaseServlet {
 			request.setAttribute("msg", "激活失败");
 			//request.getRequestDispatcher("/msg.jsp").forward(request, response);
 		}
+		//3秒后跳转到主页
+		response.setHeader("refresh", "3;url='"+request.getContextPath()+"/jsp/index.jsp'");
 		return "/msg.jsp";
 	}
 	
@@ -131,6 +132,8 @@ public class UserServlet extends BaseServlet {
 			request.setAttribute("msg", "注册失败");
 			//request.getRequestDispatcher("/msg.jsp").forward(request, response);
 		}
+		//3秒后跳转到主页
+		response.setHeader("refresh", "3;url='"+request.getContextPath()+"/jsp/index.jsp'");
 		return "/msg.jsp";
 	}
 }
