@@ -1,7 +1,6 @@
 package com.itheima.web.servlet;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -15,25 +14,15 @@ import com.itheima.domain.User;
 import com.itheima.service.UserService;
 import com.itheima.service.impl.UserServiceImpl;
 
-public class UserServlet extends HttpServlet {
+public class UserServlet extends BaseServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		//获取method参数
-		String method = request.getParameter("method");
-		//判断method参数
-		if("regist".equals(method)){
-			regist(request,response);
-		}else if("active".equals(method)){
-			active(request,response);
-		}
-	}
+	
 	/**
 	 * 账号激活
 	 * @param request
 	 * @param response
 	 */
-	private void active(HttpServletRequest request, HttpServletResponse response) {
+	public void active(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			//获取激活码
 			String code = request.getParameter("code");
@@ -61,7 +50,7 @@ public class UserServlet extends HttpServlet {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
-	private void regist(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void regist(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			//获取用户输入
 			Map<String, String[]> map = request.getParameterMap();
@@ -83,9 +72,6 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
-	}
+	
 
 }
