@@ -12,4 +12,6 @@ public interface UserDao {
 
 	void active(User user) throws SQLException;
 
+	User login(String username, String password) throws SQLException;
+
 }

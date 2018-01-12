@@ -8,4 +8,6 @@ public interface UserService {
 
 	User active(String code) throws Exception;
 
+	User login(String username, String password) throws Exception;
+
 }

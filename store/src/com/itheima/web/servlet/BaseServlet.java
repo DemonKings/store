@@ -15,7 +15,7 @@ public class BaseServlet extends HttpServlet {
 		//获取method参数
 		String method = request.getParameter("method");
 		//反射获取子类的class文件
-		Class clazz = this.getClass();
+		Class<? extends BaseServlet> clazz = this.getClass();
 		//获取所有方法
 		Method[] methods = clazz.getMethods();
 		//遍历所有方法

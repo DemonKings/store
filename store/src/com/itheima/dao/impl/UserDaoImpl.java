@@ -47,4 +47,14 @@ public class UserDaoImpl implements UserDao {
 		qr.update(sql, Constant.IS_ACTIVE,null,user.getUid());
 	}
 
+	@Override
+	/**
+	 * 用户登录
+	 */
+	public User login(String username, String password) throws SQLException {
+		QueryRunner qr = new QueryRunner(C3P0Utils.getDataSource());
+		String sql = "select * from user where username=? and password=?";
+		return qr.query(sql, new BeanHandler<>(User.class),username,password);
+	}
+
 }

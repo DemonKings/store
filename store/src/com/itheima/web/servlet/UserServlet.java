@@ -13,9 +13,41 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.itheima.domain.User;
 import com.itheima.service.UserService;
 import com.itheima.service.impl.UserServiceImpl;
+import com.itheima.utils.Constant;
 
 public class UserServlet extends BaseServlet {
-
+	public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			//获取用户名和密码
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			//调用service执行登录逻辑
+			UserService service = new UserServiceImpl();
+			User user = service.login(username,password);
+			//判断user是否存在
+			if(user!=null){
+				if(user.getState()==Constant.IS_ACTIVE){
+					//登录成功
+					//保存用户
+					request.getSession().setAttribute("user", user);
+					//重定向到首页
+					response.sendRedirect("jsp/index.jsp");
+				}else{
+					//账号未激活
+					request.setAttribute("msg", "账号未激活");
+					request.getRequestDispatcher("/msg.jsp").forward(request, response);
+				}
+			}else{
+				//用户名或密码错误
+				request.setAttribute("msg", "用户名或密码错误");
+				request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("msg", "登录失败");
+			request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+		}
+	}
 	
 	/**
 	 * 账号激活
@@ -43,6 +75,7 @@ public class UserServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 	}
+	
 	/**
 	 * 用户注册
 	 * @param request
@@ -71,7 +104,4 @@ public class UserServlet extends BaseServlet {
 			request.getRequestDispatcher("/msg.jsp").forward(request, response);
 		}
 	}
-
-	
-
 }
