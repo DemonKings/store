@@ -34,7 +34,7 @@
 						</c:if>
 						<c:if test="${not empty user }">
 							<li>欢迎,${user.username }</li>
-							<li><a href="#">退出</a></li>
+							<li><a href="${pageContext.request.contextPath }/user?method=logout">退出</a></li>
 						</c:if>
 						<li><a href="${pageContext.request.contextPath }/jsp/register.jsp">注册</a></li>
 						<li><a href="cart.htm">购物车</a></li>

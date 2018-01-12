@@ -16,6 +16,28 @@ import com.itheima.service.impl.UserServiceImpl;
 import com.itheima.utils.Constant;
 
 public class UserServlet extends BaseServlet {
+	
+	/**
+	 * 账号退出
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//删除session
+		request.getSession().invalidate();
+		//重定向到首页
+		response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
+	}
+	
+	/**
+	 * 用户登录
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			//获取用户名和密码
@@ -31,7 +53,7 @@ public class UserServlet extends BaseServlet {
 					//保存用户
 					request.getSession().setAttribute("user", user);
 					//重定向到首页
-					response.sendRedirect("jsp/index.jsp");
+					response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
 				}else{
 					//账号未激活
 					request.setAttribute("msg", "账号未激活");
