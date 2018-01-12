@@ -1,9 +1,11 @@
 package com.itheima.web.servlet;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,6 +28,20 @@ public class UserServlet extends BaseServlet {
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//删除session
 		request.getSession().invalidate();
+		
+		//获取所有cookie
+		Cookie[] cookies = request.getCookies();
+		//遍历
+		if(cookies!=null&&cookies.length>0){
+			for (Cookie cookie : cookies) {
+				//将usernameAndPwd这个cookie删除
+				if("usernameAndPwd".equals(cookie.getName())){
+					cookie.setMaxAge(0);
+					cookie.setPath(request.getContextPath()+"/");
+					response.addCookie(cookie);
+				}
+			}
+		}
 		//重定向到首页
 		response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
 	}
@@ -75,6 +91,24 @@ public class UserServlet extends BaseServlet {
 			if(user!=null){
 				if(user.getState()==Constant.IS_ACTIVE){
 					//登录成功
+					
+					//判断是否勾选自动登录
+					String auto = request.getParameter("auto");
+					//如果勾选
+					if(auto!=null&&"ok".equals(auto)){
+						//将username和password拼接成字符串
+						String usernameAndPwd = username+","+password;
+						//创建usernameAndPwd这个cookie
+						Cookie cookie = new Cookie("usernameAndPwd", usernameAndPwd);
+						//设置超时时间为7天
+						cookie.setMaxAge(7*24*3600);
+						//设置有效路径
+						cookie.setPath(request.getContextPath()+"/");
+						//添加cookie
+						response.addCookie(cookie);
+					}
+					
+					
 					//保存用户
 					request.getSession().setAttribute("user", user);
 					//重定向到首页

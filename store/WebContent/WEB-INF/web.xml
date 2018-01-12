@@ -38,11 +38,20 @@
     <url-pattern>/BaseServlet</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>CodeServlet</servlet-name>
-  	<servlet-class>com.itheima.web.servlet.CodeServlet</servlet-class>
+    <servlet-name>CodeServlet</servlet-name>
+    <servlet-class>com.itheima.web.servlet.CodeServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>CodeServlet</servlet-name>
-  	<url-pattern>/code</url-pattern>
+    <servlet-name>CodeServlet</servlet-name>
+    <url-pattern>/code</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>AutoLoginFilter</display-name>
+    <filter-name>AutoLoginFilter</filter-name>
+    <filter-class>com.itheima.web.filter.AutoLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AutoLoginFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 </web-app>
