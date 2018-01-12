@@ -6,6 +6,10 @@ import com.itheima.domain.User;
 
 public interface UserDao {
 
-	void login(User user) throws SQLException;
+	void regist(User user) throws SQLException;
+
+	User findUserByCode(String code) throws SQLException;
+
+	void active(User user) throws SQLException;
 
 }

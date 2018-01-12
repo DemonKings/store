@@ -17,6 +17,9 @@ import com.itheima.utils.UUIDUtils;
 public class UserServiceImpl implements UserService {
 
 	@Override
+	/**
+	 * 用户注册
+	 */
 	public void regist(User user) throws Exception {
 		try {
 			//开启事务
@@ -29,7 +32,7 @@ public class UserServiceImpl implements UserService {
 			user.setCode(UUIDUtils.getCode());
 			//调用dao
 			UserDao dao = new UserDaoImpl();
-			dao.login(user);
+			dao.regist(user);
 			//发送邮件
 			String mailMsg = "<a href='http://localhost/store/user?method=active&code="+user.getCode()+"'>点此激活</a>";
 			MailUtils.sendMail(user.getEmail(), "用户激活", mailMsg);
@@ -42,6 +45,22 @@ public class UserServiceImpl implements UserService {
 			//抛异常
 			throw e;
 		}
+	}
+
+	@Override
+	/**
+	 * 账号激活
+	 */
+	public User active(String code) throws Exception {
+		//根据激活码查找用户
+		UserDao dao = new UserDaoImpl();
+		User user = dao.findUserByCode(code);
+		//判断用户是否存在
+		if(user!=null){
+			//用户存在,激活用户
+			dao.active(user);
+		}
+		return user;
 	}
 
 }

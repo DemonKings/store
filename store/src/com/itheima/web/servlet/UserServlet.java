@@ -24,6 +24,34 @@ public class UserServlet extends HttpServlet {
 		//判断method参数
 		if("regist".equals(method)){
 			regist(request,response);
+		}else if("active".equals(method)){
+			active(request,response);
+		}
+	}
+	/**
+	 * 账号激活
+	 * @param request
+	 * @param response
+	 */
+	private void active(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			//获取激活码
+			String code = request.getParameter("code");
+			//执行service激活逻辑
+			UserService service = new UserServiceImpl();
+			User user = service.active(code);
+			//判断用户是否存在
+			if(user==null){
+				//激活失败
+				request.setAttribute("msg", "激活失败");
+				request.getRequestDispatcher("/msg.jsp").forward(request, response);
+			}else{
+				//激活成功
+				request.setAttribute("msg", "激活成功");
+				request.getRequestDispatcher("/msg.jsp").forward(request, response);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	/**
