@@ -108,6 +108,21 @@ public class UserServlet extends BaseServlet {
 						response.addCookie(cookie);
 					}
 					
+					//判断是否勾选记住用户名
+					String remember = request.getParameter("remember");
+					//如果勾选
+					if(remember!=null&&"ok".equals(remember)){
+						//创建rememberName这个cookie
+						Cookie cookie = new Cookie("rememberName", username);
+						//设置超时时间为7天
+						cookie.setMaxAge(7*24*3600);
+						//设置有效路径
+						cookie.setPath(request.getContextPath()+"/jsp/login.jsp");
+						//添加cookie
+						response.addCookie(cookie);
+					}
+					
+					
 					
 					//保存用户
 					request.getSession().setAttribute("user", user);
