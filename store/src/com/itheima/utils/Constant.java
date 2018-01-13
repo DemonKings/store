@@ -17,4 +17,6 @@ public interface Constant {
 	int NUM_OF_HOT = 9;
 	//商品分类下每页展示条数
 	int PRODUCT_PAGESIZE = 12;
+	//存放在Redis中的商品分类json串的key
+	String CATEGORY_LIST_JSON = "CATEGORYLISTJSON";
 }
