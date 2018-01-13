@@ -85,10 +85,10 @@
 					</div>
 					<c:forEach items="${hotPro }" var="p" >
 						<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
-							<a href="product_info.htm">
+							<a href="${pageContext.request.contextPath}/product?method=findByPid&pid=${p.pid}">
 								<img src="${pageContext.request.contextPath}/${p.pimage}" width="130" height="130" style="display: inline-block;">
 							</a>
-							<p><a href="product_info.html" style='color:#666'>${fn:substring(p.pname,0,12)}...</a></p>
+							<p><a href="${pageContext.request.contextPath}/product?method=findByPid&pid=${p.pid}" style='color:#666'>${fn:substring(p.pname,0,12)}...</a></p>
 							<p><font color="#E4393C" style="font-size:16px">&yen;${p.shop_price }</font></p>
 						</div>
 					</c:forEach>
@@ -124,10 +124,10 @@
 				
 					<c:forEach items="${newPro }" var="p" >
 						<div class="col-md-2" style="text-align:center;height:200px;padding:10px 0px;">
-							<a href="product_info.htm">
+							<a href="${pageContext.request.contextPath}/jsp/product_info.jsp">
 								<img src="${pageContext.request.contextPath}/${p.pimage}" width="130" height="130" style="display: inline-block;">
 							</a>
-							<p><a href="product_info.html" style='color:#666'>${fn:substring(p.pname,0,12)}...</a></p>
+							<p><a href="${pageContext.request.contextPath}/jsp/product_info.jsp" style='color:#666'>${fn:substring(p.pname,0,12)}...</a></p>
 							<p><font color="#E4393C" style="font-size:16px">&yen;${p.shop_price }</font></p>
 						</div>
 					</c:forEach>

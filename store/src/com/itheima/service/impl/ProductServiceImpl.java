@@ -30,4 +30,14 @@ public class ProductServiceImpl implements ProductService {
 		return dao.findNewPro();
 	}
 
+	@Override
+	/**
+	 * 根据pid查询商品
+	 */
+	public Product findByPid(String pid) throws Exception {
+		//调用dao查询商品
+		ProductDao dao = new ProductDaoImpl();
+		return dao.findByPid(pid);
+	}
+
 }
