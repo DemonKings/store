@@ -12,7 +12,7 @@
 		var params = {"method":"findAll"};
 		$.post(url,params,function(obj){
 			$(obj).each(function(index,ele) {
-				$("#cId").append("<li><a href='#'>"+ele.cname+"</a></li>");
+				$("#cId").append("<li><a href='${pageContext.request.contextPath}/product?method=findByPage&pageNumber=1&cid="+ele.cid+"'>"+ele.cname+"</a></li>");
 			});
 		},"json");
 	});

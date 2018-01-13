@@ -15,4 +15,6 @@ public interface Constant {
 	int PRODUCT_NOT_DOWN = 0;
 	//热门和最新商品展示条数
 	int NUM_OF_HOT = 9;
+	//商品分类下每页展示条数
+	int PRODUCT_PAGESIZE = 12;
 }

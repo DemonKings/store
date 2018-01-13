@@ -9,6 +9,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import com.itheima.dao.Category;
 import com.itheima.dao.ProductDao;
@@ -51,7 +52,7 @@ public class ProductDaoImpl implements ProductDao {
 	}*/
 	public Product findByPid(String pid) throws Exception {
 		QueryRunner qr = new QueryRunner(C3P0Utils.getDataSource());
-		String sql = "SELECT * FROM product pro,category c WHERE pro.cid=? AND pro.cid = c.cid";
+		String sql = "SELECT * FROM product pro,category c WHERE pro.pid=? AND pro.cid = c.cid";
 		List<Map<String, Object>> list = qr.query(sql, new MapListHandler(),pid);
 		Product product = new Product();
 		Category category = new Category();
@@ -64,6 +65,26 @@ public class ProductDaoImpl implements ProductDao {
 			product.setCategory(category);
 		}
 		return product;
+	}
+
+	@Override
+	/**
+	 * 查询当前分类下的商品总条数
+	 */
+	public int findTotalCount(String cid) throws Exception {
+		QueryRunner qr = new QueryRunner(C3P0Utils.getDataSource());
+		String sql = "select count(*) from product where cid=?";
+		return ((Long)qr.query(sql, new ScalarHandler(),cid)).intValue();
+	}
+
+	@Override
+	/**
+	 * 分页查询商品信息
+	 */
+	public List<Product> findByCid(String cid, int startIndex, int pageSize) throws Exception {
+		QueryRunner qr = new QueryRunner(C3P0Utils.getDataSource());
+		String sql = "select * from product where cid=? limit ?,?";
+		return qr.query(sql, new BeanListHandler<>(Product.class),cid,startIndex,pageSize);
 	}
 
 }

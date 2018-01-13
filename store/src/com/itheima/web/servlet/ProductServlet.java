@@ -11,8 +11,52 @@ import javax.servlet.http.HttpServletResponse;
 import com.itheima.domain.Product;
 import com.itheima.service.ProductService;
 import com.itheima.service.impl.ProductServiceImpl;
+import com.itheima.utils.Constant;
+import com.itheima.utils.PageBean;
 
 public class ProductServlet extends BaseServlet {
+	
+	
+	/**
+	 * 分页查询导航栏分类下的商品信息
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String findByPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			//获取cid
+			String cid = request.getParameter("cid");
+			int pageNumber = 1;
+			try {
+				//获取当前页
+				pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+			} catch (Exception e) {
+				e.printStackTrace();
+				pageNumber = 1;
+			}
+			//设置每页显示的条数
+			int pageSize = Constant.PRODUCT_PAGESIZE;
+			//调用service层执行查询逻辑
+			ProductService service = new ProductServiceImpl();
+			PageBean<Product> pb = service.findByPage(cid,pageNumber,pageSize);
+			//将pb放入request域中
+			request.setAttribute("pb", pb);
+			//将cid放入request域
+			request.setAttribute("cid", cid);
+			//请求转发到product_list.jsp
+			return "/jsp/product_list.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			//分页查询失败
+			request.setAttribute("msg", "分页查询失败");
+			return "/msg.jsp";
+		}
+	}
+	
 	
 	/**
 	 * 通过pid查询商品,请求转发到product_info展示商品详细信息
