@@ -8,7 +8,8 @@
 </head>
 <body>
 	<%
-		request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+		//request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+		request.getRequestDispatcher("/product?method=index").forward(request, response);
 	%>
 </body>
 </html>
