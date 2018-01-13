@@ -6,6 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+	$(function() {
+		var url = "${pageContext.request.contextPath}/category";
+		var params = {"method":"findAll"};
+		$.post(url,params,function(obj){
+			$(obj).each(function(index,ele) {
+				$("#cId").append("<li><a href='#'>"+ele.cname+"</a></li>");
+			});
+		},"json");
+	});
+</script>
 </head>
 <body>
 	<!--
@@ -53,11 +64,11 @@
 
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-							<ul class="nav navbar-nav">
-								<li class="active"><a href="product_list.htm">手机数码<span class="sr-only">(current)</span></a></li>
+							<ul id="cId" class="nav navbar-nav">
+								<!-- <li class="active"><a href="product_list.htm">手机数码<span class="sr-only">(current)</span></a></li>
 								<li><a href="#">电脑办公</a></li>
 								<li><a href="#">电脑办公</a></li>
-								<li><a href="#">电脑办公</a></li>
+								<li><a href="#">电脑办公</a></li> -->
 							</ul>
 							<form class="navbar-form navbar-right" role="search">
 								<div class="form-group">
