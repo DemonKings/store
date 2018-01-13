@@ -117,12 +117,24 @@ public class UserServlet extends BaseServlet {
 						//设置超时时间为7天
 						cookie.setMaxAge(7*24*3600);
 						//设置有效路径
-						cookie.setPath(request.getContextPath()+"/jsp/login.jsp");
+						cookie.setPath(request.getContextPath()+"/");
 						//添加cookie
 						response.addCookie(cookie);
+					}else{
+						//不勾选
+						Cookie[] cookies = request.getCookies();
+						//遍历所有cookie,找到rememberName
+						if(cookies!=null&&cookies.length>0){
+							for (Cookie cookie : cookies) {
+								if("rememberName".equals(cookie.getName())){
+									cookie.setMaxAge(0);
+									cookie.setPath(request.getContextPath()+"/");
+									response.addCookie(cookie);
+									break;
+								}
+							}
+						}
 					}
-					
-					
 					
 					//保存用户
 					request.getSession().setAttribute("user", user);

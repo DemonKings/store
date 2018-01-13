@@ -60,7 +60,7 @@ font {
  <div class="form-group">
     <label for="username" class="col-sm-2 control-label">用户名</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="username" placeholder="请输入用户名" name="username" value="${rememberName }">
+      <input type="text" class="form-control" id="username" placeholder="请输入用户名" name="username" value="${cookie.rememberName.value }">
     </div>
   </div>
    <div class="form-group">
@@ -85,8 +85,14 @@ font {
         <label>
           <input type="checkbox" name="auto" value="ok"> 自动登录
         </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
         <label>
-          <input type="checkbox" name="remember" value="ok"> 记住用户名
+	        <c:if test="${not empty cookie.rememberName }">
+	          <input checked="checked" type="checkbox" name="remember" value="ok"> 记住用户名
+	        </c:if>
+	        <c:if test="${empty cookie.rememberName }">
+	          <input type="checkbox" name="remember" value="ok"> 记住用户名
+	        </c:if>
         </label>
       </div>
     </div>
