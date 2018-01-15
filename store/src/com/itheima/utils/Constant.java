@@ -19,4 +19,15 @@ public interface Constant {
 	int PRODUCT_PAGESIZE = 12;
 	//存放在Redis中的商品分类json串的key
 	String CATEGORY_LIST_JSON = "CATEGORYLISTJSON";
+	/*
+	 * 订单状态
+	 */
+	//未支付
+	int ORDER_WEIZHIFU = 1;
+	//未发货
+	int ORDER_WEIFAHUO = 2;
+	//已发货
+	int ORDER_YIFAHUO = 3;
+	//已签收
+	int ORDER_YIQIANSHOU = 4;
 }
