@@ -78,7 +78,4 @@ public class OrderServlet extends BaseServlet {
 			return "/msg.jsp";
 		}
 	}
-
-
-
 }

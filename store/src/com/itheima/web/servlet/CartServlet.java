@@ -20,7 +20,9 @@ public class CartServlet extends BaseServlet {
 		Cart cart = getCart(request);
 		//清空购物车
 		cart.clearCart();
-		return "/jsp/cart.jsp";
+		//return "/jsp/cart.jsp";
+		response.sendRedirect(request.getContextPath()+"/jsp/cart.jsp");
+		return null;
 	}
 	
 	/**
@@ -39,7 +41,9 @@ public class CartServlet extends BaseServlet {
 		Cart cart = getCart(request);
 		//删除该购物项
 		cart.removeCartItemFromCart(pid);
-		return "/jsp/cart.jsp";
+		//return "/jsp/cart.jsp";
+		response.sendRedirect(request.getContextPath()+"/jsp/cart.jsp");
+		return null;
 	}
 	
 	
@@ -68,7 +72,9 @@ public class CartServlet extends BaseServlet {
 			Cart cart = getCart(request);
 			//将购物项添加到购物车
 			cart.addCartItemToCart(cartItem);
-			return "/jsp/cart.jsp";
+			//return "/jsp/cart.jsp";
+			response.sendRedirect(request.getContextPath()+"/jsp/cart.jsp");
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("msg", "添加购物车失败");
@@ -76,7 +82,11 @@ public class CartServlet extends BaseServlet {
 		}
 	}
 
-
+	/**
+	 * 抽取出从session获取cart的方法
+	 * @param request
+	 * @return
+	 */
 	public Cart getCart(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Cart cart = (Cart) session.getAttribute("cart");

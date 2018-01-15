@@ -8,6 +8,7 @@ import com.itheima.dao.impl.OrderDaoImpl;
 import com.itheima.domain.OrderItem;
 import com.itheima.domain.Orders;
 import com.itheima.service.OrderService;
+import com.itheima.utils.BeanFactory;
 import com.itheima.utils.C3P0Utils;
 
 public class OrderServiceImpl implements OrderService {
@@ -18,7 +19,8 @@ public class OrderServiceImpl implements OrderService {
 			//开启手动事务
 			C3P0Utils.startTransaction();
 			//调用dao将保存订单
-			OrderDao dao = new OrderDaoImpl();
+			//OrderDao dao = new OrderDaoImpl();
+			OrderDao dao = (OrderDao) BeanFactory.getBean("OrderDao");
 			dao.saveOrder(order);
 			//获取所有订单项
 			List<OrderItem> listItem = order.getListItem();
