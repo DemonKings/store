@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Cart {
 	//多个购物项
-	private Map<String, CartItem> map = new HashMap<>();
+	private Map<String, CartItem> map = new HashMap<String, CartItem>();
 	//总计
 	private double total;
 	public Map<String, CartItem> getMap() {

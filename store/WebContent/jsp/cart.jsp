@@ -36,11 +36,29 @@
 			}
 		</style>
 	</head>
+	<script type="text/javascript">
+		function checkDelete(pid) {
+			//alert(pid);
+			if(confirm("你确定要删除该商品吗?")){
+				location.href = "${pageContext.request.contextPath}/cart?method=removeCartItemFromCart&pid="+pid;
+			}
+		}
+		function checkClear() {
+			//alert(pid);
+			if(confirm("你确定要清空购物车吗?")){
+				location.href = "${pageContext.request.contextPath}/cart?method=clearCart";
+			}
+		}
+	</script>
 
 	<body>
 		<%@ include file="header.jsp" %>
 		
 		<div class="container">
+		<c:if test="${empty cart.cartItemList }">
+			<h2>购物车是空的,请先添加商品</h2>
+		</c:if>
+		<c:if test="${not empty cart.cartItemList }">
 			<div class="row">
 
 				<div style="margin:0 auto; margin-top:10px;width:950px;">
@@ -75,7 +93,7 @@
 									<span class="subtotal">￥${ci.subtotal}</span>
 								</td>
 								<td>
-									<a href="javascript:;" class="delete">删除</a>
+									<a href="javascript:;" class="delete" onclick="checkDelete('${ci.product.pid}')">删除</a>
 								</td>
 							</tr>
 							</c:forEach>
@@ -84,7 +102,6 @@
 					</table>
 				</div>
 			</div>
-
 			<div style="margin-right:130px;">
 				<div style="text-align:right;">
 					<em style="color:#ff6600;">
@@ -92,7 +109,7 @@
 			</em> 赠送积分: <em style="color:#ff6600;">596</em>&nbsp; 商品金额: <strong style="color:#ff6600;">￥${cart.total }元</strong>
 				</div>
 				<div style="text-align:right;margin-top:10px;margin-bottom:10px;">
-					<a href="order_info.htm" id="clear" class="clear">清空购物车</a>
+					<a href="javascript:;" id="clear" class="clear" onclick="checkClear()">清空购物车</a>
 					<a href="order_info.htm">
 						<input type="submit" width="100" value="提交订单" name="submit" border="0" style="background: url('${pageContext.request.contextPath}/images/register.gif') no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 						height:35px;width:100px;color:white;">
@@ -100,8 +117,8 @@
 				</div>
 			</div>
 
+		</c:if>
 		</div>
-
 		<div style="margin-top:50px;">
 			<img src="${pageContext.request.contextPath}/image/footer.jpg" width="100%" height="78" alt="我们的优势" title="我们的优势" />
 		</div>
