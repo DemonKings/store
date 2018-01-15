@@ -40,6 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
 			//将json串放入jedis中
 			jedis.set(Constant.CATEGORY_LIST_JSON, json);
 		}
+		jedis.close();
 		return json;
 	}
 

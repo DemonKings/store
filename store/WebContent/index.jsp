@@ -9,6 +9,7 @@
 <body>
 	<%
 		//request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
+		//请求转发Servlet,查询数据库中的商品之后再请求转发到首页
 		request.getRequestDispatcher("/product?method=index").forward(request, response);
 	%>
 </body>
