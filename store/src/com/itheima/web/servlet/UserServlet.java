@@ -43,7 +43,8 @@ public class UserServlet extends BaseServlet {
 			}
 		}
 		//重定向到首页
-		response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
+		//response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
+		response.sendRedirect(request.getContextPath()+"/");
 	}
 	
 	/**
