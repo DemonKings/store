@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -83,6 +84,32 @@ public class OrderDaoImpl implements OrderDao {
 			}
 		}
 		return orders;
+	}
+
+	@Override
+	/**
+	 * 根据订单编号查询订单
+	 */
+	public Orders findOrderByOid(String oid) throws Exception {
+		QueryRunner qr = new QueryRunner(C3P0Utils.getDataSource());
+		String sql = "select * from orders where oid=?";
+		Orders order = qr.query(sql, new BeanHandler<>(Orders.class),oid);
+		sql = "select * from orderitem o,product p where o.oid=? and o.pid=p.pid";
+		List<Map<String, Object>> listMap = qr.query(sql, new MapListHandler(),oid);
+		for (Map<String, Object> map : listMap) {
+			//将订单项信息封装到实体中
+			OrderItem orderItem = new OrderItem();
+			BeanUtils.populate(orderItem, map);
+			//将商品信息封装到实体中
+			Product product = new Product();
+			BeanUtils.populate(product, map);
+			//将商品实体封装到订单项中
+			orderItem.setProduct(product);
+			//将订单项添加到订单的订单项集合中
+			List<OrderItem> listItem = order.getListItem();
+			listItem.add(orderItem);
+		}
+		return order;
 	}
 
 }

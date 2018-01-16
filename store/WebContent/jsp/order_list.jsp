@@ -41,7 +41,7 @@
 							<tr class="success">
 								<th colspan="2">${order.oid } </th>
 								<c:if test="${order.state==1}">
-									<th colspan="2"><a href="#">去支付</a></th>
+									<th colspan="2"><a href="${pageContext.request.contextPath}/order?method=findOrderByOid&oid=${order.oid }">去支付</a></th>
 								</c:if>
 								<c:if test="${order.state==2}">
 									<th colspan="2">待发货</th>

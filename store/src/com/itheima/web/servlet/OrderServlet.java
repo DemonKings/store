@@ -24,6 +24,31 @@ import com.itheima.utils.UUIDUtils;
 
 public class OrderServlet extends BaseServlet {
 	
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String findOrderByOid(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			//获取oid
+			String oid = request.getParameter("oid");
+			//调用service根据订单编号查询订单
+			OrderService service = (OrderService)BeanFactory.getBean("OrderService");
+			Orders order = service.findOrderByOid(oid);
+			//将order放入request域中
+			request.setAttribute("order", order);
+			return "/jsp/order_info.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("msg", "查询订单详细信息失败");
+			return "/msg.jsp";
+		}
+	}
 	
 	/**
 	 * 分页查询订单
