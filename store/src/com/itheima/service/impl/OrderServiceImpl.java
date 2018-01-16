@@ -68,5 +68,15 @@ public class OrderServiceImpl implements OrderService {
 		return dao.findOrderByOid(oid);
 	}
 
+	@Override
+	/**
+	 * 更新订单数据
+	 */
+	public void updateOrder(Orders order) throws Exception {
+		//调用dao更新订单
+		OrderDao dao = (OrderDao)BeanFactory.getBean("OrderDao");
+		dao.updateOrder(order);
+	}
+
 
 }

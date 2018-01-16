@@ -112,4 +112,16 @@ public class OrderDaoImpl implements OrderDao {
 		return order;
 	}
 
+	@Override
+	/**
+	 * 更新订单数据
+	 */
+	public void updateOrder(Orders order) throws Exception {
+		QueryRunner qr = new QueryRunner(C3P0Utils.getDataSource());
+		String sql = "update orders set name=?,address=?,telephone=?,state=? where oid=?";
+		Object[] params = {order.getName(),order.getAddress(),order.getTelephone(),
+				order.getState(),order.getOid()};
+		qr.update(sql,params);
+	}
+
 }
