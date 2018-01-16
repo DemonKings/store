@@ -22,6 +22,7 @@ import com.itheima.utils.BeanFactory;
 import com.itheima.utils.Constant;
 import com.itheima.utils.PageBean;
 import com.itheima.utils.PaymentUtil;
+import com.itheima.utils.Privilege;
 import com.itheima.utils.UUIDUtils;
 
 public class OrderServlet extends BaseServlet {
@@ -163,7 +164,7 @@ public class OrderServlet extends BaseServlet {
 		}
 	}
 	/**
-	 * 
+	 * 根据商品编号查询订单详细信息
 	 * @param request
 	 * @param response
 	 * @return
@@ -196,6 +197,7 @@ public class OrderServlet extends BaseServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
+	@Privilege
 	public String findOrderByPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
@@ -233,11 +235,12 @@ public class OrderServlet extends BaseServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
+	@Privilege
 	public String commitOrder(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			//判断用户是否登录
 			User user = (User) request.getSession().getAttribute("user");
+			//判断用户是否登录
 			if(user==null){
 				request.setAttribute("msg", "请先登录!");
 				return "/msg.jsp";

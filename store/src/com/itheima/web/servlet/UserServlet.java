@@ -139,7 +139,8 @@ public class UserServlet extends BaseServlet {
 					//保存用户
 					request.getSession().setAttribute("user", user);
 					//重定向到首页
-					response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
+					//response.sendRedirect(request.getContextPath()+"/jsp/index.jsp");
+					response.sendRedirect(request.getContextPath()+"/");
 					return null;
 				}else{
 					//账号未激活

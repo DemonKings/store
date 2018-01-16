@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.itheima.utils.Privilege;
+
 public class BaseServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,6 +32,17 @@ public class BaseServlet extends HttpServlet {
 		if(flag){
 			try {
 				Method m = clazz.getMethod(method, HttpServletRequest.class,HttpServletResponse.class);
+				//判断方法是否有指定注解
+//				if(m.isAnnotationPresent(Privilege.class)){
+//					//判断用户是否登录
+//					Object user = request.getSession().getAttribute("user");
+//					if(user==null){
+//						//未登录
+//						request.setAttribute("msg", "权限不足,请先登录");
+//						request.getRequestDispatcher("/msg.jsp").forward(request, response);
+//						return;
+//					}
+//				}
 				//执行方法,返回值为要请求转发的路径
 				String path = (String) m.invoke(this, request,response);
 				//判断返回值
