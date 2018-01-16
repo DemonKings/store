@@ -96,6 +96,7 @@ public class OrderServlet extends BaseServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
+	@Privilege
 	public String pay(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
@@ -240,11 +241,11 @@ public class OrderServlet extends BaseServlet {
 			throws ServletException, IOException {
 		try {
 			User user = (User) request.getSession().getAttribute("user");
-			//判断用户是否登录
+			/*//判断用户是否登录
 			if(user==null){
 				request.setAttribute("msg", "请先登录!");
 				return "/msg.jsp";
-			}
+			}*/
 			//创建订单对象
 			Orders order = new Orders();
 			//设置订单id
