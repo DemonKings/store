@@ -30,4 +30,6 @@ public interface Constant {
 	int ORDER_YIFAHUO = 3;
 	//已签收
 	int ORDER_YIQIANSHOU = 4;
+	//我的订单每页显示条数
+	int ORDER_PAGESIZE = 3;
 }

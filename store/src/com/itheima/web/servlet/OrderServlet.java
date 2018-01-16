@@ -17,11 +17,59 @@ import com.itheima.domain.Orders;
 import com.itheima.domain.User;
 import com.itheima.service.OrderService;
 import com.itheima.service.impl.OrderServiceImpl;
+import com.itheima.utils.BeanFactory;
 import com.itheima.utils.Constant;
+import com.itheima.utils.PageBean;
 import com.itheima.utils.UUIDUtils;
 
 public class OrderServlet extends BaseServlet {
-
+	
+	
+	/**
+	 * 分页查询订单
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String findOrderByPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			//获取当前页参数
+			int pageNumber = 1;
+			try {
+				pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+			} catch (Exception e) {
+				pageNumber = 1;
+			}
+			//设置每页条数
+			int pageSize = Constant.ORDER_PAGESIZE;
+			//获取用户id
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+			String uid = user.getUid();
+			//调用service查询订单
+			OrderService service = (OrderService)BeanFactory.getBean("OrderService");
+			PageBean<Orders> pb = service.findOrderByPage(pageNumber,pageSize,uid);
+			//将pb放入request域
+			request.setAttribute("pb", pb);
+			return "/jsp/order_list.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("msg", "查询我的订单失败");
+			return "/msg.jsp";
+		}
+	}
+	
+	/**
+	 * 提交订单
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public String commitOrder(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {

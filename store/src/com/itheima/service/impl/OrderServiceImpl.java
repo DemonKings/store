@@ -10,6 +10,7 @@ import com.itheima.domain.Orders;
 import com.itheima.service.OrderService;
 import com.itheima.utils.BeanFactory;
 import com.itheima.utils.C3P0Utils;
+import com.itheima.utils.PageBean;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -37,6 +38,24 @@ public class OrderServiceImpl implements OrderService {
 			C3P0Utils.rollbackAndClose();
 			throw e;
 		}
+	}
+
+	@Override
+	/**
+	 * 分页查询我的订单
+	 */
+	public PageBean<Orders> findOrderByPage(int pageNumber, int pageSize, String uid) throws Exception {
+		//调用dao查询总条数
+		OrderDao dao = (OrderDao)BeanFactory.getBean("OrderDao");
+		int totalCount = dao.findTotalCount(uid);
+		//创建pagebean对象
+		PageBean<Orders> pb = new PageBean<>(pageNumber, pageSize, totalCount);
+		//获取起始索引
+		int startIndex = pb.getStartIndex();
+		//调用dao分页查询所有订单
+		List<Orders> data = dao.findOrderByPage(startIndex,pageSize,uid);
+		pb.setData(data);
+		return pb;
 	}
 
 
